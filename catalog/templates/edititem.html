@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="IE=edge" http-equiv="X-UA-Compatible" />
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <title>Catalog | Edit item</title>
+    <link href="{{ url_for('static',filename='bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ url_for('static', filename='normalize.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ url_for('static', filename='main.min.css') }}" rel="stylesheet" type="text/css" />
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="{{ url_for('static', filename='bootstrap.min.js') }}"></script>
+  </head>
+  <body>
+    <header class="header" role="banner">
+      
+    </header>
+
+    <main role="main">
+
+      <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+          <div class="navbar-header">
+            <button aria-controls="navbar" aria-expanded="false" class="navbar-toggle collapsed" data-target="#navbar" data-toggle="collapse" type="button">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Catalog</a>
+            <a class="navbar-login" href="/gdisconnect">Logout</a>
+          </div>
+
+          <div class="collapse navbar-collapse" id="navbar">
+            <ul class="nav navbar-nav">
+              <li class="active">
+                <a href="/eyes/items">Eyes</a>
+              </li>
+              <li>
+                <a href="/lips/items">Lips</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+
+      <div class="container">
+        <div class="starter-template">
+          <h1>
+            <a href="/{{ category_slug }}/items">{{ category_name }}</a> > {{ item.name }}
+          </h1>
+          <p class="lead">
+            you can edit item info here.
+          </p>
+        </div>
+      
+        <form class="col-md-8 col-md-offset-2 col-xs-12" method='POST' enctype = 'multipart/form-data' action='{{ url_for("editItem", category_slug=category_slug, item_slug=item.slug)}}'>
+
+          <fieldset class="form-group">
+            <label for="name">Name</label>
+            <input class="form-control" id="name" type='text' name='name' value ='{{item.name}}' size='30'>
+          </fieldset>
+
+          <fieldset class="form-group">
+            <label for="description">Description</label>
+            <textarea class="form-control" id="description" name='description' rows="3" >{{item.description}}</textarea>
+          </fieldset>
+
+          <div class="form-group">
+            <label for="category">Category</label>
+            <select class="form-control c-select" id="category" name="category_id">
+              {% for category in categories%} 
+              <option class="{% if(category.id == item.category_id) %}selected{% endif %}" value="{{category.id}}">
+                {{ category.name }}
+              </option>
+              {% endfor %}
+            </select>
+          </div>
+        
+          <fieldset class="form-group">  
+            <input type='submit' class="btn btn-primary" value='Update'>
+            <a rple="button" class="btn btn-secondary" href="{{ url_for('showItem', category_slug=category_slug, item_slug=item.slug)}}">Cancel</button>
+          </fieldset>
+
+        </form>
+      
+      </div>
+    </main>
+
+  </body>
+</html>

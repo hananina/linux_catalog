@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="IE=edge" http-equiv="X-UA-Compatible" />
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <title>Catalog | Home</title>
+    <link href="{{ url_for('static',filename='bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ url_for('static', filename='normalize.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ url_for('static', filename='main.min.css') }}" rel="stylesheet" type="text/css" />
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="{{ url_for('static', filename='bootstrap.min.js') }}"></script>
+  </head>
+  <body>
+    <header class="header" role="banner">
+      
+    </header>
+
+    <main role="main">
+      
+      <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+          <div class="navbar-header">
+            <button aria-controls="navbar" aria-expanded="false" class="navbar-toggle collapsed" data-target="#navbar" data-toggle="collapse" type="button">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Catalog</a>
+            <!-- to hide logout while the user is not logged in. -->
+            {% if status == "logged_out" %}
+            <a class="navbar-login" href="/login">Login</a>
+            {% else %}
+            <a class="navbar-login" href="/gdisconnect">Logout</a>
+            {% endif %}
+          </div>
+
+          <div class="collapse navbar-collapse" id="navbar">
+            <ul class="nav navbar-nav">
+              <li class="active">
+                <a href="/eyes/items">Eyes</a>
+              </li>
+              <li>
+                <a href="/lips/items">Lips</a>
+              </li>
+            </ul>
+          </div>        
+        </div>
+      </nav>
+
+      <div class="container">
+        <div class="starter-template">
+          <h1>
+            Welcome to catalog! 
+          </h1>
+          <p class="lead">
+            categories and latest updated items will be showed here.
+          </p>
+        </div>
+        
+        <div class="latest-update col-md-6 col-md-offset-3 col-xs-12">
+          <a href="/add">Add Item</a>
+          <ul>
+            {% for item in items %}
+              <li class="red">{{ item.name }} {{ item.created_date }} {{ item.user_id }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+
+      </div>
+    </main>
+
+  </body>
+</html>

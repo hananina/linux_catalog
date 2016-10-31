@@ -1,0 +1,26 @@
+body {
+  padding-top: 50px;
+}
+
+.starter-template {
+  padding: 40px 15px;
+  text-align: center;
+}
+
+.red {
+  color: red;
+}
+
+.navbar-login {
+  float: left;
+  padding: 15px 15px;
+  font-size: 18px;
+  line-height: 20px;
+  height: 50px;
+  color: #e0c9ad;
+}
+
+.navbar-login:hover, .navbar-login:focus {
+  color: bisque;
+  text-decoration: none;
+}

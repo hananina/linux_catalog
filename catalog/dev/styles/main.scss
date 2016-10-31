@@ -1,0 +1,26 @@
+body {
+  padding-top: 50px;
+}
+.starter-template {
+  padding: 40px 15px;
+  text-align: center;
+}
+
+.red{
+  color: red;
+}
+
+//extend bootstrap's navbar
+.navbar-login{
+  float: left;
+  padding: 15px 15px;
+  font-size: 18px;
+  line-height: 20px;
+  height: 50px;
+  color: #e0c9ad;
+  &:hover,
+  &:focus{
+    color: bisque;
+    text-decoration: none;
+  }
+}
