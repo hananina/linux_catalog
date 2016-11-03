@@ -1,0 +1,41 @@
+
+##Faild to revoke token for intended user.
+http://ec2-35-160-57-253.us-west-2.compute.amazonaws.com/gdisconnect
+
+
+so I tried to debug this by printing the access_token currently in use.
+then I need further information what to solve this...
+
+
+[Thu Nov 03 12:09:58.293114 2016] [:error] [pid 10117:tid 140336412178176] result is 
+[Thu Nov 03 12:09:58.293167 2016] [:error] [pid 10117:tid 140336412178176] access_token in disconnect is = 
+[Thu Nov 03 12:09:58.293174 2016] [:error] [pid 10117:tid 140336412178176] ya29.Ci-KAzjxfPbOgQAw-kpNUQvFKuW552YA4v_0J1sa5FaGgGAjeKGzBOT-9uyVHckFcQ
+[Thu Nov 03 12:09:58.293193 2016] [:error] [pid 10117:tid 140336412178176] {'status': '400', 'content-length': '31', 'x-xss-protection': '1; mode=block', 'x-content-type-options': 'nosniff', 'transfer-encoding': 'chunked', 'expires': 'Mon, 01 Jan 1990 00:00:00 GMT', 'server': 'GSE', '-content-encoding': 'gzip', 'pragma': 'no-cache', 'cache-control': 'no-cache, no-store, max-age=0, must-revalidate', 'date': 'Thu, 03 Nov 2016 16:09:57 GMT', 'x-frame-options': 'SAMEORIGIN', 'alt-svc': 'quic=":443"; ma=2592000; v="36,35,34"', 'content-type': 'application/json; charset=utf-8'}
+
+
+======
+
+##when you use PickleProperty?
+PickleProperty は　repeted = true 
+
+======
+
+##wht use "udp" for NTP
+
+[what is NTP](http://www.infraexpert.com/study/tcpip25.html)
+NTP is Network Time Protocol.
+
+when NTP client accessing to NTP server, use UDP port #123 for incoming.
+for outgoing also use UDP port #123.
+
+======
+
+I run this code once, and stope by typeing "control & c"
+python __init.py__
+
+but why my application still working on ec2 server?
+http://ec2-35-160-57-253.us-west-2.compute.amazonaws.com/
+
+=======
+
+How can I do to stopping application?
