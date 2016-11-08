@@ -15,11 +15,6 @@ then I need further information what to solve this...
 
 ======
 
-##when you use PickleProperty?
-PickleProperty は　repeted = true 
-
-======
-
 ##wht use "udp" for NTP
 
 [what is NTP](http://www.infraexpert.com/study/tcpip25.html)
