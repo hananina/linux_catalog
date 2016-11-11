@@ -2,13 +2,11 @@
 =================================
 
 - The IP address and SSH port so your server can be accessed by the reviewer.
-  ```ssh -i ~/.ssh/udacity_key.rsa root@35.161.68.50```
+  ```ssh grader@35.161.68.50 -p 2200```
 
 
 - The complete URL to your hosted web application.
-
   [http://ec2-35-161-68-50.us-west-2.compute.amazonaws.com/](http://ec2-35-161-68-50.us-west-2.compute.amazonaws.com/)
-
 
 
 ## 1. Launch your Virtual Machine with your Udacity account. 
