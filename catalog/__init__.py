@@ -43,7 +43,7 @@ APPLICATION_NAME = 'Item CATALOG'
 
 # Create session and connect to DB
 # engine = create_engine('sqlite:///catalog.db')
-engine = create_engine( 'postgresql://catalog:catalogpass@localhost/catalog')
+engine = create_engine( 'postgresql://catalog:catalog82205196@localhost/catalog')
 
 Base.metadata.bind = engine
 DBSession = sessionmaker(bind=engine)
@@ -300,44 +300,6 @@ def gdisconnect():
         return render_template('notification.html', response=response)
 
 
-
-# Disconnect - revoke a current user's token and reset thir login_session.
-@app.route('/gdisconnect')
-def gdisconnect():
-    # only disconnect a connected user.
-    access_token = login_session.get('access_token')
-
-    if access_token is None:
-        print 'no access token'
-        response = "Current User not connected."
-        return render_template('notification.html', response=response)
-
-    #Excute HTTP GET request to revoke current token.
-    # To revoke, pass the access token to Google's url and store the response in "result" object.
-    url = 'https://accounts.google.com/o/oauth2/revoke?token=%s' % access_token
-    h = httplib2.Http()
-    result = h.request(url, 'GET')[0]
-    print 'result is '
-    print 'access_token in disconnect is = '
-    print access_token
-    print result
-
-    if result['status'] == '200':
-        # Reset the user's session.
-        del login_session['access_token']
-        del login_session['gplus_id']
-        del login_session['username']
-        del login_session['email']
-        del login_session['picture']
-        response = "You are succesfully logged out."
-        return render_template('notification.html', response=response)
-
-    else:
-        # For watever reason, the given token was invalid.
-        response = "Faild to revoke token for intended user."
-        return render_template('notification.html', response=response)
-
-
 @app.route('/')
 def home():
     # to check the user is logged in.
@@ -471,4 +433,4 @@ def addItem():
 if __name__ == '__main__':
     app.secret_key  = 'super_secret_key' # which flask will use to create sessions for our users.
     app.debug = True
-    app.run(host='0.0.0.0', port=8888)
+    app.run(host='0.0.0.0', port=8889)

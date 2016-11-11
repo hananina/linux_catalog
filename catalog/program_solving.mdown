@@ -1,6 +1,6 @@
 
 ##Faild to revoke token for intended user.
-http://ec2-35-160-57-253.us-west-2.compute.amazonaws.com/gdisconnect
+http://ec2-35-161-68-50.us-west-2.compute.amazonaws.com/gdisconnect
 
 
 so I tried to debug this by printing the access_token currently in use.
@@ -29,7 +29,7 @@ I run this code once, and stope by typeing "control & c"
 python __init.py__
 
 but why my application still working on ec2 server?
-http://ec2-35-160-57-253.us-west-2.compute.amazonaws.com/
+http://ec2-35-161-68-50.us-west-2.compute.amazonaws.com/
 
 =======
 

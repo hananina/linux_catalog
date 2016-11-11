@@ -100,7 +100,7 @@ class Item(Base):
 #   'sqlite:///catalog.db'
 #   )
 # engine = create_engine('postgresql://catalog:catalogpass@localhost/catalogdb')
-engine = create_engine( 'postgresql://catalog:catalogpass@localhost/catalog')
+engine = create_engine( 'postgresql://catalog:catalog82205196@localhost/catalog')
 
 
 #which goes into the db and adds the classes 
