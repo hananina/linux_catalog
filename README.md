@@ -43,7 +43,7 @@ create new file to store public key for later use
 
 
 login as grader genarate pair of files. (grader.rsa, grader.rsa.pub)
-*run without sudo command, otherwise you will ganarate keys under root/.ssh/
+run without sudo command, otherwise you will ganarate keys under root/.ssh/
 ```ssh-keygen```
 
 copy the content of "grader.rsa" to you local machine ~/.ssh/grader.rsa,
@@ -145,13 +145,34 @@ choose ```None of the above```from the list. then choose ```UTC```.
 ## 9.Install and configure Apache 
 >to serve a Python mod_wsgi application
 
-Install apache
+------------------------------------------------
+
+【My directory structure】
+
+    |--------catalog
+    |----------------catalog
+    |-----------------------static
+    |-----------------------templates
+    |-----------------------__init__.py
+    |----------------catalog.wsgi
+
+Tips 1: [How to deploy a flask app on an ubuntu vps](https://www.digitalocean.com/community/tutorials/how-to-deploy-a-flask-application-on-an-ubuntu-vps)
+
+Tips 2: [How To Set Up Apache Virtual Hosts on Ubuntu 14.04 LTS](https://www.digitalocean.com/community/tutorials/how-to-set-up-apache-virtual-hosts-on-ubuntu-14-04-lts)
+
+------------------------------------------------
+
+- Install apache
 ```sudo apt-get install apache2```
+------------------------------------------------
 
+- Go to this directory to change apache configuration.
 ```sudo nano /etc/apache2/sites-enabled/000-default.conf```
+------------------------------------------------
 
-add the line below, before th closing tag</VirtualHost>
-```WSGIScriptAlias / /var/www/html/catalog/catalog.wsgi```
+- Add a line before the closing tag``</VirtualHost>``
+
+Add the line: `` WSGIScriptAlias / /var/www/html/catalog/catalog.wsgi``
 
 
     <VirtualHost *:80>
@@ -187,16 +208,15 @@ add the line below, before th closing tag</VirtualHost>
 
     # vim: syntax=apache ts=4 sw=4 sts=4 sr noet
 
+------------------------------------------------
 
-!!I wasted a few hours since I didn't restert the apache after changed the configuration file.
-Restart apache
-```sudo service apache2 restart```
+【```catalog.conf``` file content】
 
+File path: /etc/apache2/sites-enabled/catalog.conf
 
-```catalog.wsgi``` file content below,
-
+    grader@ip-10-20-16-86:/etc/apache2/sites-enabled$ cat catalog.conf
     <VirtualHost *:80>
-            ServerName 35.161.68.50
+            ServerName ec2-35-161-68-50.us-west-2.compute.amazonaws.com
             ServerAdmin admin@35.161.68.50
             WSGIScriptAlias / /var/www/catalog/catalog.wsgi
             <Directory /var/www/catalog/catalog/>
@@ -210,37 +230,50 @@ Restart apache
             </Directory>
             ErrorLog ${APACHE_LOG_DIR}/error.log
             LogLevel warn
-            CustomLog ${APACHE_LOG_DIR}/access.log combinedsudo service apache2 restart
+            CustomLog ${APACHE_LOG_DIR}/access.log combined
+            ServerAlias ec2-35-161-68-50.us-west-2.compute.amazonaws.com/
     </VirtualHost>
 
+------------------------------------------------
 
-Configure according to the Tips: 
-[How to deploy a flask app on an ubuntu vps](https://www.digitalocean.com/community/tutorials/how-to-deploy-a-flask-application-on-an-ubuntu-vps)
+【```catalog.wsgi``` file content】
 
-[How To Set Up Apache Virtual Hosts on Ubuntu 14.04 LTS](https://www.digitalocean.com/community/tutorials/how-to-set-up-apache-virtual-hosts-on-ubuntu-14-04-lts)
+File path: /var/www/html/catalog/catalog.wsgi
+
+    #!/usr/bin/python
+    import sys
+    import logging
+    logging.basicConfig(stream=sys.stderr)
+    sys.path.insert(0,"/var/www/catalog/")
+
+    from catalog import app as application
+    application.secret_key = 'super_secret_key'
+
+------------------------------------------------
 
 
-【My directory structure】
+- !!I wasted a few hours since I didn't restert the apache after changed the configuration file.
+Restart apache
+```sudo service apache2 restart```
 
-    |--------catalog
-    |----------------catalog
-    |-----------------------static
-    |-----------------------templates
-    |-----------------------__init__.py
-    |----------------catalog.wsgi
-
+------------------------------------------------
 
 - Enable the application ```a2ensite itemcatalog.conf```
 
+------------------------------------------------
 - Run the application
 ```python __init__.py```
 
+------------------------------------------------
+
 - Check this url to see the application deployed ```http://ec2-35-161-68-50.us-west-2.compute.amazonaws.com/```
 
+------------------------------------------------
  
 **Problems with configuring and how I solved it : 
 [Udacity Forum](https://discussions.udacity.com/t/wsgi-app-config/195286/5)
 
+------------------------------------------------
 
 ## 10.Install and configure PostgreSQL
 
@@ -268,12 +301,10 @@ Create a new user named catalog that has limited permissions to your catalog app
 
 - *error*
 
-when I run "python __initial__.py"
-
+>when I run "python __initial__.py"
 I got error that "can't connect the catalog user"
 
-
-have to add a line to the file below, to allow this user's connection.
+To solve this problem, you have to add a line to the file below, to allow this user's connection.
 make sure that youu are login as "postgres"
 the file in /etc/postgresql/9.3/main/pg_hba.conf
 
@@ -296,7 +327,6 @@ and don't forget to set the password in "database_setup.py" in catalog(app direc
 
 also the line in "__init__.py" 
 ```engine = create_engine( 'postgresql://catalog:PASSWORD FOR THE USER CATALOG@localhost/catalog')```
-
 
 
 
@@ -330,6 +360,7 @@ to see what is already using that port.
 ```lsof -i :8889```
 
 That will show the pid, then to stop that process
+
     grader@ip-10-20-16-86:/var/www/catalog/catalog$ lsof -i :8889
     COMMAND   PID   USER   FD   TYPE DEVICE SIZE/OFF NODE NAME
     python  25257 grader    3u  IPv4  88432      0t0  TCP *:8889 (LISTEN)
@@ -340,8 +371,12 @@ then, kill the connection
 
 ```kill 25257``` ```kill 25261```
 
-https://discussions.udacity.com/t/address-already-in-use-error/185435
-http://linux-topics.com/02linux/12_1.html
+helpful links:
+
+[Udacity discussuion forum](https://discussions.udacity.com/t/address-already-in-use-error/185435)
+
+[linux how to check session in use](http://linux-topics.com/02linux/12_1.html)
+
 
 - Google login not working!
 You have to update your ```cliant_secres.json```, get it from [app console](https://console.cloud.google.com/apis/credentials/oauthclient/).
